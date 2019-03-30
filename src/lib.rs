@@ -63,14 +63,9 @@ use lazy_static::lazy_static;
 #[cfg(test)]
 mod test;
 
-use std::collections::HashMap;
 use std::{error, fmt};
 
-#[cfg(feature = "fnv")]
-use fnv::FnvBuildHasher as Hasher;
-
-#[cfg(not(feature = "fnv"))]
-use std::collections::hash_map::RandomState as Hasher;
+use hashbrown::HashMap;
 
 const PADDING_BLOCK_START: u32 = 0x1500;
 #[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
@@ -103,8 +98,9 @@ const BLOCK_STARTS: &[u32] = &[
     0x28000, 0x28100, 0x28200, 0x28300, 0x28400, 0x28500,
 ];
 lazy_static! {
-    static ref BLOCK_START_TO_INDEX: HashMap<u32, u8, Hasher> =
-        (0..BLOCK_STARTS.len()).map(|b| (BLOCK_STARTS[b], b as u8)).collect();
+    static ref BLOCK_START_TO_INDEX: HashMap<u32, u8> = (0..BLOCK_STARTS.len())
+        .map(|b| (BLOCK_STARTS[b], b as u8))
+        .collect();
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -345,7 +341,8 @@ where
             buf[pos] = b;
             pos += 1;
         }
-    }).map(|_| pos)
+    })
+    .map(|_| pos)
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
