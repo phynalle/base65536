@@ -8,6 +8,7 @@ repository = "https://github.com/nuew/base65536"
 readme = "README.md"
 keywords = ["encode", "decode", "utf-8"]
 categories = ["encoding"]
+edition = "2018"
 
 [badges]
 travis-ci = { repository = "nuew/base65536", branch = "master" }

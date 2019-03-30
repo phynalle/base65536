@@ -58,14 +58,7 @@
 #![doc(html_root_url = "https://docs.rs/base65536/0.4.0")]
 #![cfg_attr(feature = "nightly", feature(test))]
 
-#[macro_use]
-extern crate lazy_static;
-
-#[cfg(feature = "fnv")]
-extern crate fnv;
-
-#[cfg(feature = "nightly")]
-extern crate test as test_crate;
+use lazy_static::lazy_static;
 
 #[cfg(test)]
 mod test;
